@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="591.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fractaltreef.FractalTreeController">
+    <children>
+      <Pane fx:id="pnFractal" prefHeight="514.0" prefWidth="1200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f0f0f060" height="58.0" layoutY="534.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
+      <JFXButton fx:id="btnStart" layoutX="549.0" layoutY="546.0" onAction="#clickStartFractal" prefHeight="35.0" prefWidth="103.0" style="-fx-background-color: #5198fb;" text="Start" textFill="WHITE">
+         <font>
+            <Font name="Montserrat Medium" size="12.0" />
+         </font></JFXButton>
+      <JFXTextField fx:id="txtLength" layoutX="40.0" layoutY="546.0" onKeyReleased="#clickSetLength" promptText="Set length">
+         <font>
+            <Font name="Montserrat Medium" size="12.0" />
+         </font>
+      </JFXTextField>
+      <JFXTabPane layoutX="299.0" layoutY="34.0" prefWidth="188.0" />
+      <JFXTextField fx:id="txtAngle" layoutX="205.0" layoutY="546.0" onKeyReleased="#clickSetAngle" promptText="Set angle">
+         <font>
+            <Font name="Montserrat Medium" size="12.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtWidth" layoutX="378.0" layoutY="546.0" onKeyReleased="#clickSetWidth" promptText="set X">
+         <font>
+            <Font name="Montserrat Medium" size="12.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtHeight" layoutX="707.0" layoutY="546.0" onKeyReleased="#clickSetHeight" promptText="Set Y">
+         <font>
+            <Font name="Montserrat Medium" size="12.0" />
+         </font>
+      </JFXTextField>
+      <JFXToggleButton fx:id="tglRandomize" layoutX="880.0" layoutY="529.0" text="Randomize" />
+      <Button layoutX="1150.0" mnemonicParsing="false" onAction="#clickClose" prefHeight="25.0" prefWidth="25.0" />
+      <JFXColorPicker fx:id="clpFractal" layoutX="1050.0" layoutY="545.0" />
+    </children>
+</AnchorPane>
