@@ -15,7 +15,7 @@
     <children>
       <Pane fx:id="pnFractal" prefHeight="514.0" prefWidth="1200.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f0f0f060" height="58.0" layoutY="534.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1200.0" />
-      <JFXButton fx:id="btnStart" layoutX="549.0" layoutY="546.0" onAction="#clickStartFractal" prefHeight="35.0" prefWidth="103.0" style="-fx-background-color: #5198fb;" text="Start" textFill="WHITE">
+      <JFXButton layoutX="549.0" layoutY="546.0" onAction="#clickStartFractal" prefHeight="35.0" prefWidth="103.0" style="-fx-background-color: #5198fb;" text="Start" textFill="WHITE">
          <font>
             <Font name="Montserrat Medium" size="12.0" />
          </font></JFXButton>

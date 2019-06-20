@@ -33,8 +33,6 @@ public class FractalTreeController implements Initializable {
     @FXML
     private Pane pnFractal;
     @FXML
-    private JFXButton btnStart;
-    @FXML
     private JFXTextField txtLength;
     @FXML
     private JFXTextField txtAngle;
@@ -47,71 +45,121 @@ public class FractalTreeController implements Initializable {
     @FXML
     private JFXTextField txtHeight;
     
+    private final int firstLineWidth = 0;
+    private final int firstLineHeight = -80;
+    
     private int fractalLength;
     private int fractalAngle;
     private int fractalWidth;
     private int fractalHeight;
-    private boolean randomize;
-
+    private boolean isFirstLine;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
+    {
+        setFractalTreeValues();
+    }    
+    
+    private void setFractalTreeValues()
     {
         fractalLength = 100;
         fractalAngle = 0;
         fractalWidth = 600;
         fractalHeight = 550;
         clpFractal.setValue(Color.BLACK);
-    }    
+    }
     
     @FXML
     private void clickStartFractal(ActionEvent event) 
     {
         pnFractal.getChildren().clear();
         clpFractal.getCustomColors();
+        isFirstLine = true;
         if (tglRandomize.isSelected())
         {
-            randomize = true;
-            spaint (fractalLength, 0, 600, 550); 
+            makeTree (fractalLength, fractalAngle, fractalWidth, fractalHeight, true); 
         }
         else
         {
-            randomize = false;
-            spaint (fractalLength, fractalAngle, fractalWidth, fractalHeight);
+            makeTree (fractalLength, fractalAngle, fractalWidth, fractalHeight, false);
         }
     }
     
-    
-    public void spaint (int length,int angle,int x, int y) 
-    {  
-        makeTree(length, angle, x, y);
-    }
-    
-    public void makeTree(int length, int angle, int x, int y) 
+    public void makeTree(int length, int angle, int x, int y, boolean isRandomized) 
     {
-        int xmove=(int)(Math.cos(Math.toRadians(angle+90)) * length);
-        int ymove=(int)(Math.sin(Math.toRadians(angle-90)) * length);
+        int xmove = getXMove(length, angle, isRandomized);
+        int ymove = getYMove(length, angle, isRandomized);
         
-        Line linez = new Line();
-        linez.setStartX(x);
-        linez.setStartY(y);
-        linez.setEndX(x+xmove);
-        linez.setEndY(y+ymove);
-        linez.setStroke(clpFractal.getValue());
-        pnFractal.getChildren().add(linez);
-        if (randomize == true)
+        Line line = createLine(x, y, xmove, ymove);
+        pnFractal.getChildren().add(line);
+        
+        if (length >= 1)
         {
-            Random random = new Random();
-            angle = random.nextInt(360);
-        }
-
-        if (length>=1)
-        {
-            makeTree(length-10, angle + 30, x + xmove, y + ymove);
-            makeTree(length-10, angle - 30, x + xmove, y + ymove);
+            makeTree(length-10, angle + 30, x + xmove, y + ymove, isRandomized);
+            makeTree(length-10, angle - 30, x + xmove, y + ymove, isRandomized);
         }
     }
+    
+    private int getXMove(int length, int angle, boolean isRandomized)
+    {
+        int xmove = 0;
+        if (isFirstLine)
+        {
+            xmove= firstLineWidth;
+            isFirstLine = false;
+        }
+        else if(!isFirstLine)
+        {
+            if (!isRandomized)
+            {
+                xmove=(int)(Math.cos(Math.toRadians(angle+90)) * length);
+            }
+            else if (isRandomized)
+            {
+                Random random = new Random();
+                angle = random.nextInt(360);
+                xmove=(int)(Math.cos(Math.toRadians(angle+90)) * length);
+            }
+        }
+        return xmove;
+    }
+    
+    private int getYMove(int length, int angle, boolean isRandomized)
+    {
+        int ymove = 0;
+        if (isFirstLine)
+        {
+            ymove= firstLineHeight;
+            isFirstLine = false;
+        }
+        else if(!isFirstLine)
+        {
+            if (!isRandomized)
+            {
+                ymove=(int)(Math.sin(Math.toRadians(angle-90)) * length);
+            }
+            else if (isRandomized)
+            {
+                Random random = new Random();
+                angle = random.nextInt(360);
+                ymove=(int)(Math.sin(Math.toRadians(angle-90)) * length);
+            }
+        }
+        return ymove;
+    }
+
+    private Line createLine(int x, int y, int xmove, int ymove)
+    {
+        Line line = new Line();
+        line.setStartX(x);
+        line.setStartY(y);
+        line.setEndX(x+xmove);
+        line.setEndY(y+ymove);
+        line.setStroke(clpFractal.getValue());
+        return line;
+    }
+    
 
     @FXML
     private void clickSetLength(KeyEvent event)
@@ -124,6 +172,7 @@ public class FractalTreeController implements Initializable {
     {
         fractalAngle = Integer.parseInt(txtAngle.getText());
     }
+    
     @FXML
     private void clickSetWidth(KeyEvent event) 
     {
@@ -136,9 +185,10 @@ public class FractalTreeController implements Initializable {
         fractalHeight = Integer.parseInt(txtHeight.getText());
     }
     
-        @FXML
+    @FXML
     private void clickClose(ActionEvent event) 
     {
-         Platform.exit();
+        Platform.exit();
     }
+    
 }
